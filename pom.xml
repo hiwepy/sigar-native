@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.hyperic</groupId>
+	<artifactId>sigar-native</artifactId>
+	<version>1.6.5.132-6</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sigar.version>1.6.5.132-6</sigar.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hyperic/sigar -->
+		<dependency>
+			<groupId>org.hyperic</groupId>
+			<artifactId>sigar</artifactId>
+			<version>${sigar.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hyperic</groupId>
+			<artifactId>sigar-dist</artifactId>
+			<version>1.6.3.82</version>
+			<type>zip</type>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>unpack-sigar</id>
+						<phase>prepare-package<!-- or any other valid maven phase --></phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeGroupIds>org.hyperic</includeGroupIds>
+							<includeArtifactIds>sigar-dist</includeArtifactIds>
+							<outputDirectory>
+								${project.basedir}
+								<!-- or: ${project.basedir}/wherever/you/want/it -->
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <target>
+                            	<delete dir="${project.basedir}/src/main/resources/sigar-${project.version}" />
+                            	<mkdir dir="${project.basedir}/src/main/resources/sigar-${project.version}" />
+                            	<copy todir="${project.basedir}/src/main/resources/sigar-${project.version}">
+					                 <fileset dir="${project.basedir}/hyperic-sigar-1.6.3/sigar-bin/lib">
+					                      <include name="*.*" />
+					                      <exclude name="*.jar" />
+					                 </fileset>
+					        	</copy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<!-- 跳过单元测试 -->
+					<skip>true</skip>
+					<skipTests>true</skipTests>
+				</configuration>
+            </plugin>
+		</plugins>
+	</build>
+
+</project>
