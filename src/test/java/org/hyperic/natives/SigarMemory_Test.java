@@ -16,38 +16,41 @@
 package org.hyperic.natives;
 
 import org.hyperic.sigar.Mem;
-import org.hyperic.sigar.SigarException;
-import org.hyperic.sigar.SigarFactory;
+import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarProxy;
-import org.hyperic.sigar.Swap;  
-  
-/** 
- * 借助Sigar API获取获取内存信息 
- *  
- * @author GaoHuanjie  
- */  
-public class SigarMemory_Test {  
-  
-    public static void main(String[] args) throws SigarException {  
-    	SigarProxy sigar = SigarFactory.newSigar();  
-  
-        // 物理内存信息    
-        Mem mem = sigar.getMem();  
-        System.out.println("mem total：" + mem.getTotal() + " B");  
-        System.out.println("mem ram：" + mem.getRam() + " B");  
-        System.out.println("mem used：" + mem.getUsed() + " B");  
-        System.out.println("mem free：" + mem.getFree() + " B");  
-        System.out.println("mem actualUsed：" + mem.getActualUsed() + " B");    
-        System.out.println("mem actualFree：" + mem.getActualFree() + " B");  
-        System.out.println("mem usedPercent：" + mem.getUsedPercent() + "%");  
-        System.out.println("mem freePercent：" + mem.getFreePercent() + "%");  
-          
-        // 交换区信息    
-        Swap swap = sigar.getSwap();  
-        System.err.println("swap total：" + swap.getTotal() + " B");  
-        System.err.println("swap used：" + swap.getUsed() + " B");  
-        System.err.println("swap free：" + swap.getFree() + " B");  
-        System.err.println("swap pageIn：" + swap.getPageIn());  
-        System.err.println("swap pageOut：" + swap.getPageOut());  
-    }  
-}  
+import org.hyperic.sigar.Swap;
+
+import kamon.sigar.SigarProvisioner;
+
+/**
+ * 借助Sigar API获取获取内存信息
+ * 
+ * @author GaoHuanjie
+ */
+public class SigarMemory_Test {
+
+	public static void main(String[] args) throws Exception {
+
+		SigarProvisioner.provision();
+		SigarProxy sigar = new Sigar();
+
+		// 物理内存信息
+		Mem mem = sigar.getMem();
+		System.out.println("mem total：" + mem.getTotal() + " B");
+		System.out.println("mem ram：" + mem.getRam() + " B");
+		System.out.println("mem used：" + mem.getUsed() + " B");
+		System.out.println("mem free：" + mem.getFree() + " B");
+		System.out.println("mem actualUsed：" + mem.getActualUsed() + " B");
+		System.out.println("mem actualFree：" + mem.getActualFree() + " B");
+		System.out.println("mem usedPercent：" + mem.getUsedPercent() + "%");
+		System.out.println("mem freePercent：" + mem.getFreePercent() + "%");
+
+		// 交换区信息
+		Swap swap = sigar.getSwap();
+		System.err.println("swap total：" + swap.getTotal() + " B");
+		System.err.println("swap used：" + swap.getUsed() + " B");
+		System.err.println("swap free：" + swap.getFree() + " B");
+		System.err.println("swap pageIn：" + swap.getPageIn());
+		System.err.println("swap pageOut：" + swap.getPageOut());
+	}
+}

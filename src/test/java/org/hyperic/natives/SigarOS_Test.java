@@ -19,11 +19,10 @@ import java.net.InetAddress;
 
 import org.hyperic.sigar.OperatingSystem;
 import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.SigarException;
-import org.hyperic.sigar.SigarFactory;
 import org.hyperic.sigar.Who;
 
-import junit.framework.TestCase;  
+import junit.framework.TestCase;
+import kamon.sigar.SigarProvisioner;  
   
 /** 
  * 借助Sigar API获取操作系统信息 
@@ -31,9 +30,10 @@ import junit.framework.TestCase;
  */  
 public class SigarOS_Test extends TestCase {  
   
-    public void testOS() throws SigarException {  
-    	
-    	Sigar sigar = (Sigar) SigarFactory.newSigar();
+    public void testOS() throws Exception {  
+    		  
+	  SigarProvisioner.provision();
+	  Sigar sigar = new Sigar();
   
         // 取到当前操作系统的名称    
         String hostname = "";  

@@ -18,9 +18,11 @@ package org.hyperic.natives;
 
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
+import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-import org.hyperic.sigar.SigarFactory;
-import org.hyperic.sigar.SigarProxy;  
+import org.hyperic.sigar.SigarProxy;
+
+import kamon.sigar.SigarProvisioner;  
 
 /** 
  * 
@@ -32,8 +34,10 @@ import org.hyperic.sigar.SigarProxy;
 */  
 public class SigarDisk_Test {  
 
-  public static void main(String[] args) throws SigarException {  
-	  SigarProxy sigar = SigarFactory.newSigar();
+  public static void main(String[] args) throws Exception {  
+	  
+	  SigarProvisioner.provision();
+	  SigarProxy sigar = new Sigar();
 
       FileSystem [] fileSystemArray = sigar.getFileSystemList();  
       for ( FileSystem fileSystem:fileSystemArray ) {  

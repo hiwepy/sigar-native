@@ -19,9 +19,10 @@ package org.hyperic.natives;
 import org.hyperic.sigar.Cpu;
 import org.hyperic.sigar.CpuInfo;
 import org.hyperic.sigar.CpuPerc;
-import org.hyperic.sigar.SigarException;
-import org.hyperic.sigar.SigarFactory;
-import org.hyperic.sigar.SigarProxy;  
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarProxy;
+
+import kamon.sigar.SigarProvisioner;  
 
 /** 
 * 借助Sigar API获取CPU相关信息 
@@ -30,9 +31,10 @@ import org.hyperic.sigar.SigarProxy;
 */  
 public class SigarCpul_Test {  
 
-  public static void main(String[] args) throws SigarException {  
+  public static void main(String[] args) throws Exception {  
 	  
-	  SigarProxy sigar = SigarFactory.newSigar();
+	  SigarProvisioner.provision();
+	  SigarProxy sigar = new Sigar();
 
       CpuInfo info = sigar.getCpuInfoList()[0];  
       System.out.println("CpuInfo mhz：" + info.getMhz());  
