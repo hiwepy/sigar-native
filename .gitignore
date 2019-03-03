@@ -37,4 +37,3 @@ transaction-logs
 .flattened-pom.xml
 secrets.yml
 hyperic-sigar-1.6.5
-native
