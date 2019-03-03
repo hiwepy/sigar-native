@@ -301,6 +301,7 @@
 									<fileset dir="${project.basedir}/hyperic-sigar-1.6.5/sigar-bin/lib">
 										<include name="*.*" />
 										<exclude name="*.jar" />
+										<exclude name=".sigar_shellrc" />
 									</fileset>
 								</copy>
 							</target>
