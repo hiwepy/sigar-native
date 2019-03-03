@@ -5,7 +5,7 @@
 	
 	<groupId>com.github.vindell</groupId>
 	<artifactId>sigar-native</artifactId>
-	<version>1.0.1.RELEASE</version>
+	<version>1.0.2.RELEASE</version>
 	<description>Sigar Native</description>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<url>https://github.com/vindell/${project.artifactId}</url>
